@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Pixelify+Sans&family=Satisfy&display=swap');
+
+
+/* .menu-container{} */
+
+.menu-heading{
+    font-family: 'Satisfy', cursive;
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+}
+.menu-heading h1{
+    font-size: 5rem;
+    font-weight: 500;
+    /* text-decoration-line: underline; */
+}
+
+.menu-list{
+    background-color: aliceblue;
+    /* border: solid; */
+    margin-top: 50px;
+    margin-left: 20px;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+}
