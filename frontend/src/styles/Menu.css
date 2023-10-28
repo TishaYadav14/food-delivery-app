@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Pixelify+Sans&family=Satisfy&display=swap');
 
 
-/* .menu-container{} */
+.menu-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+}
 
 .menu-heading{
     font-family: 'Satisfy', cursive;
@@ -26,4 +31,19 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 15px;
+    flex-grow: 1;
 }
+
+.food-card-container {
+    background-color: #fdf4f4;
+    /* border: solid; */
+    margin: 50px 20px 0px 20px;
+    padding: 10px;
+    width: 98%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+    flex-basis: 200;
+
+  }

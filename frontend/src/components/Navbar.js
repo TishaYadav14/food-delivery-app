@@ -1,12 +1,15 @@
 import React from "react";
 import "../styles/Navbar.css";
+// import "../styles/Loginpage.css";
 import logo from "../assets/images/logo.png";
 import carticon from "../assets/icons/carticon.png";
 import avataricon from "../assets/icons/avatar.png";
 import { NavLink } from "react-router-dom";
+// import LoginModal from "../pages/Loginpage";
 // import logo from "";
 
 export const Navbar = () => {
+
   return (
     <nav className="navbar">
       <div className="navbar-left">

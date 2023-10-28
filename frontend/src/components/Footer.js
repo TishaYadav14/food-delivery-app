@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Footer.css";
-import logo from "../assets/images/logo.png"
+import logoforfooter from "../assets/images/logofooter.png"
 
 const Footer = () => {
   return (
@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="footer-content text-center">
               <div className="logo-container">
                 <a href="#">
-                  <img src={logo} alt="logo" />
+                  <img src={logoforfooter} alt="logo" />
                 </a>
               </div>
               <p>
@@ -62,3 +62,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

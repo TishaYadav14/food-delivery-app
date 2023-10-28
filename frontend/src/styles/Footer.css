@@ -1,6 +1,8 @@
 /* footer.css */
 
 .footer-area {
+  display: flex;
+  justify-content: center;
   padding: 60px 0;
   border-bottom: 1px solid #353c46;
 }
@@ -16,8 +18,11 @@
 }
 
 .logo-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+}
+.logo-container img {
+  width: 300px;
 }
 
 .footer-content p::after {
@@ -68,14 +73,14 @@
 }
 
 .footer-content img {
-  max-width: 210px;
+  min-width: 210px;
 }
 
 /* Additional styles for section and footer */
 section,
 footer {
-  background: #830000;
-  color: #d9dee6;
+  background: #0a0000;
+  color: #ec8702;
 }
 
 footer p {
