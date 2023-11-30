@@ -1,12 +1,18 @@
 // import React from 'react';
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/Loginpage.css";
 import logo from "../assets/images/logo.png"
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Loginpage() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isMember, setIsMember] = useState(false);
+  const [error, setError] = useState("");
+
+  // const [isLogin, setIsLogin] = useState(true);
   // const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     // firstName: "",
     // lastName: "",
@@ -16,6 +22,7 @@ function Loginpage() {
     rememberPassword: false,
   });
 
+  
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -23,54 +30,87 @@ function Loginpage() {
       [name]: type === "checkbox" ? checked : value,
     });
   };
+  
+  // const handleToggleLoginSignup = () => {
+  //   setIsLogin(!isLogin);
+  // };
+
+  const addUserToLocalStorage = ({ user, token }) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+  };
+
+  const registerUser = async (currentUser) => {
+    try {
+      const response = await axios.post(
+        `temp-project-pi.vercel.app/api/user/register`,
+        currentUser
+      );
+      const { user, token } = response.data;
+      addUserToLocalStorage({ user, token });
+      if (user) {
+        navigate("/foods");
+        window.location.reload();
+      }
+    } catch (e) {
+      console.log(e);
+      setError(e.response.data);
+    }
+  };
+
+  const loginUser = async (currentUser) => {
+    try {
+      const response = await axios.post(
+        `temp-project-pi.vercel.app/api/user/login`,
+        currentUser
+      );
+      const { user, token } = response.data;
+      addUserToLocalStorage({ user, token });
+      if (user) {
+        navigate("/foods");
+        window.location.reload();
+      }
+    } catch (e) {
+      console.log(e);
+      setError(e.response.data);
+    }
+  };
 
   // const handleToggleViewPassword = () => {
   //   setShowPassword(!showPassword);
   // };
 
-  const handleToggleLoginSignup = () => {
-    setIsLogin(!isLogin);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your validation and registration/login logic here
     // For example, you can check if the required fields are filled and validate email/password
+    const { username, email, password } = formData;
+    console.log(username);
+    const currentUser = { username, email, password};
+    if (isMember) {
+      loginUser(currentUser);
+    } else {
+      registerUser(currentUser);
+    }
   };
-
+  
   return (
     <div className="loginpage">
       <div className="loginpage-content">
         <div className="login-box">
+        <form onSubmit={handleSubmit}>
+          {error && (
+            <div>
+              <p>{error}</p>
+            </div>
+          )}
           {/* Sign Up */}
           <img src={logo} alt="Logo" />
 
-          <h2>{isLogin ? "Login" : "Sign Up"}</h2>
+          {/* <h2>{isLogin ? "Login" : "Sign Up"}</h2> */}
 
-          {/* {!isLogin && (
-            <>
-              <input
-                type="text"
-                name="firstName"
-                className="Name"
-                placeholder="First Name"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                required
-                />
-              <input
-                type="text"
-                name="lastName"
-                className="Name"
-                placeholder="Last Name"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                required
-              />
-            </>
-          )} */}
-
-          {!isLogin && (
+          {!isMember && (
             <>
               <input
                 type="text"
@@ -79,7 +119,7 @@ function Loginpage() {
                 value={formData.username}
                 onChange={handleInputChange}
                 required
-              />
+                />
             </>
           )}
 
@@ -90,7 +130,7 @@ function Loginpage() {
             value={formData.email}
             onChange={handleInputChange}
             required
-          />
+            />
 
           <div className="password-input">
             <input
@@ -98,41 +138,61 @@ function Loginpage() {
               type="password"
               name="password"
               placeholder="Password"
-              value={formData.password}
+              // value={formData.password}
               onChange={handleInputChange}
               required
-            />
-            {/* <i
-              className={`password-toggle ${
-                showPassword ? "fas fa-eye-slash" : "fas fa-eye"
-              }`}
-              onClick={handleToggleViewPassword}
-            /> */}
+              />
           </div>
 
-          {isLogin && (
+          {isMember && (
             <label>
               <input
                 type="checkbox"
                 name="rememberPassword"
                 checked={formData.rememberPassword}
                 onChange={handleInputChange}
-              />
+                />
               Remember me
             </label>
           )}
 
           <button type="submit" className="button" onClick={handleSubmit}>
-            {isLogin ? "Login" : "Sign Up"}
+            {isMember ? "Login" : "Sign Up"}
           </button>
 
-          <div className="toggle-link" onClick={handleToggleLoginSignup}>
+          {isMember && (
+            <p className="login-register-text">
+              Don't have an account? Please 
+              <span
+                className="login-register-link"
+                onClick={() => setIsMember(!isMember)}
+                >
+                Register
+              </span>
+            </p>
+          )}
+          {!isMember && (
+            <p className="login-register-text">
+              Already have an account? Please 
+              <span
+                className="login-register-link"
+                onClick={() => setIsMember(!isMember)}
+                >
+                Login
+              </span>
+            </p>
+          )}
+
+          {/* <div className="toggle-link" onClick={handleToggleLoginSignup}>
             {isLogin ? "Not a member? Sign Up" : "Already have an account? Login"}
-          </div>
+          </div> */}
+          </form>
+
         </div>
       </div>
     </div>
   );
-}
-
-export default Loginpage;
+};
+  
+  export default Loginpage;
+  

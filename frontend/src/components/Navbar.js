@@ -31,11 +31,11 @@ export const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-right">
-        <NavLink to="/cart">
-          <img src={carticon} alt="shopping-cart" className="cart-button" />
-        </NavLink>
         <NavLink to="/login">
           <img src={avataricon} alt="avatar-icon" className="profile-avatar" />
+        </NavLink>
+        <NavLink to="/cart">
+          <img src={carticon} alt="shopping-cart" className="cart-button" />
         </NavLink>
       </div>
     </nav>
